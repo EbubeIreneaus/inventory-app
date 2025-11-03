@@ -74,8 +74,6 @@ export const useMyDataStore = defineStore("data", () => {
     isLoggedIn.value = false;
     Auth.value = null;
   }
-  
-if (import.meta.client) {
 
   async function fetchData() {
     const [products, invoices, expenses, staffs] = await Promise.all([
@@ -98,7 +96,7 @@ if (import.meta.client) {
   }
   fetchData();
 
-  
+  if (import.meta.client) {
     const event = new EventSource("/api/stream");
 
     if (event) {

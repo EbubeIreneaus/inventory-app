@@ -43,7 +43,7 @@
                   class="mb-5"
                   v-model="formData.rememberme"
                 />
-                <nuxt-link class="text-info" href="/"
+                <nuxt-link class="text-info" href="/auth/reset/"
                   >Forget password?</nuxt-link
                 >
               </div>
