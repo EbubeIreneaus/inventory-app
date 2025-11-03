@@ -9,6 +9,15 @@ export default defineNuxtConfig({
      "/**":{ssr: false}
   },
 
+   nitro: {
+    serverAssets: [
+      {
+        baseName: "drizzle",
+        dir: "./drizzle"
+      }
+    ]
+  },
+
   runtimeConfig: {
     jwtSecret: process.env.JWT_SECRET
   },
