@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
       subject: "Password Reset Link",
       html: `
       <p>Follow the below link to reset your password</p>
-      <p><a href="http://localhost:3001/auth/reset/${token}">http://localhost:3001/auth/reset/${token}</a></p>
+      <p><a href="https://inventory-app-07.vercel.app/auth/reset/${token}">https://inventory-app-07.vercel.app/auth/reset/${token}</a></p>
       <p>Best Regards</p>
       <p>Bizly Enterprice</p>
       `,

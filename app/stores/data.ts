@@ -115,14 +115,14 @@ export const useMyDataStore = defineStore("data", () => {
           case "update_stock":
             const ustockId = data.data.id;
             const uindex = Stocks.value.findIndex((s) => s.id == ustockId);
-            if (uindex && uindex > -1) {
+            if (uindex > -1) {
               Stocks.value[uindex] = data.data;
             }
             break;
           case "delete_stock":
             const dstockId = data.data.id;
             const dindex = Stocks.value.findIndex((s) => s.id == dstockId);
-            if (dindex && dindex > -1) {
+            if (dindex > -1) {
               Stocks.value.splice(dindex, 1);
             }
             break;
