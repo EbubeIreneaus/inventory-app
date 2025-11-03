@@ -74,6 +74,8 @@ export const useMyDataStore = defineStore("data", () => {
     isLoggedIn.value = false;
     Auth.value = null;
   }
+  
+if (import.meta.client) {
 
   async function fetchData() {
     const [products, invoices, expenses, staffs] = await Promise.all([
@@ -96,43 +98,43 @@ export const useMyDataStore = defineStore("data", () => {
   }
   fetchData();
 
-  if(import.meta.client){
-  const event = new EventSource("/api/stream");
+  
+    const event = new EventSource("/api/stream");
 
-  if (event) {
-    event.onmessage = (e) => {
-      const data = JSON.parse(e.data);
-      switch (data.key) {
-        case "new_invoice":
-          Invoices.value.push(data.data);
-          break;
-        case "new_expense":
-          Expenses.value.push(data.data);
-          break;
-        case "new_stock":
-          Stocks.value.push(data.data);
-          break;
-        case "update_stock":
-          const ustockId = data.data.id;
-          const uindex = Stocks.value.findIndex((s) => s.id == ustockId);
-          if (uindex && uindex > -1) {
-            Stocks.value[uindex] = data.data;
-          }
-          break;
-        case "delete_stock":
-          const dstockId = data.data.id;
-          const dindex = Stocks.value.findIndex((s) => s.id == dstockId);
-          if (dindex && dindex > -1) {
-            Stocks.value.splice(dindex, 1)
-          }
-          break;
+    if (event) {
+      event.onmessage = (e) => {
+        const data = JSON.parse(e.data);
+        switch (data.key) {
+          case "new_invoice":
+            Invoices.value.push(data.data);
+            break;
+          case "new_expense":
+            Expenses.value.push(data.data);
+            break;
+          case "new_stock":
+            Stocks.value.push(data.data);
+            break;
+          case "update_stock":
+            const ustockId = data.data.id;
+            const uindex = Stocks.value.findIndex((s) => s.id == ustockId);
+            if (uindex && uindex > -1) {
+              Stocks.value[uindex] = data.data;
+            }
+            break;
+          case "delete_stock":
+            const dstockId = data.data.id;
+            const dindex = Stocks.value.findIndex((s) => s.id == dstockId);
+            if (dindex && dindex > -1) {
+              Stocks.value.splice(dindex, 1);
+            }
+            break;
 
-        default:
-          break;
-      }
-    };
+          default:
+            break;
+        }
+      };
+    }
   }
-}
 
   return {
     Stocks,
