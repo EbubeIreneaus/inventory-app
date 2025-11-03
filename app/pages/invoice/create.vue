@@ -72,7 +72,7 @@
                       size="xl"
                       class="rounded-none"
                       color="error"
-                      @click="productForm.quantity -= 0.5"
+                      @click="productForm.quantity -= 1"
                       :disabled="productForm.quantity <= 0"
                     />
                     <u-input
@@ -84,7 +84,7 @@
                     />
                     <u-button
                       icon="mdi:plus"
-                      @click="productForm.quantity += 0.5"
+                      @click="productForm.quantity += 1"
                       size="xl"
                       class="rounded-none"
                       color="info"

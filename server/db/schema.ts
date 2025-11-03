@@ -44,8 +44,8 @@ export const stockTable = pgTable('stocks', {
   category: varchar({ length: 50 }),
   quantity: integer().default(0).notNull(),
   isAvailable: boolean().default(true),
-  unitPrice: decimal('unit_price',{precision:5}).default('0.0'),
-  sellingPrice: decimal('selling_price',{precision:5}).default('0.0'),
+  unitPrice: decimal('unit_price',{precision:9, scale: 2}).default('0.0'),
+  sellingPrice: decimal('selling_price',{precision:9, scale: 2}).default('0.0'),
    size: varchar({length: 10, enum: ['sm','md', 'lg', 'xl', 'xxl']}),
    description: text()
 })
@@ -54,7 +54,7 @@ export const invoiceTable = pgTable('sales', {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     userId: integer(),
     products: json().$type<{id:number, name: string, unitPrice: string, amount: string, quantity: number}[]>(),
-    totalAmount: decimal("total_amount", {precision:5}).default('0.0'),
+    totalAmount: decimal("total_amount", {precision:9, scale: 2}).default('0.0'),
     createdAt: timestamp('created_at').defaultNow(),
     buyer: varchar({length: 255}),
     paymentType: varchar({length: 10, enum: ['cash','transfer', 'card', 'debt']}).default('cash').notNull(),
@@ -72,7 +72,7 @@ export const expensesTable = pgTable('expenses', {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     userId: integer(),
     desc: text(),
-    totalAmount: decimal("total_amount", {precision:5}).default('0.0'),
+    totalAmount: decimal("total_amount", {precision:9, scale: 2}).default('0.0'),
     createdAt: timestamp('created_at').defaultNow(),
     paymentType: varchar({length: 10, enum: ['cash','transfer', 'card', 'debt']}).default('cash').notNull(),
     currency: varchar({length: 6}).default('NGN'),
