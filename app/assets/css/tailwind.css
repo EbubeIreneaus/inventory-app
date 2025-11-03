@@ -1,0 +1,33 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme {
+  --color-background-light: #f7f7f7;
+  --color-background-dark: #101828;
+  --color-surface-light: #F9FAFB;
+  --color-surface-dark: #171F2F;
+  --color-primary: #162042;
+  --color-light: #f1f5f9;
+  --color-dark: #111827;
+  --color-error: #ef4444;
+  --color-secondary: #798EFF;
+  --color-info: #38bdf8;
+  --font-playfair: "Sansation", sans-serif
+}
+
+body{
+    @apply bg-background-light dark:bg-background-dark print:bg-[white] print:text-[black];
+    font-family: var(--font-playfair);
+}
+@media print {
+  @page {
+    size: auto;
+    margin: 0;
+  }
+  /* Remove margins that break layout in print mode */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    visibility: hidden;
+  }
+}
