@@ -21,6 +21,11 @@ test.describe("Expenses Lifecyle: Create, Assert & Delete", () => {
     await page
       .getByRole("textbox", { name: "Total Amount*" })
       .fill(expense.amount);
+    await page.getByRole("combobox", { name: "category*" }).click();
+    await page.getByRole("option", { name: expense.category }).click();
+    await page.getByRole("combobox", { name: "Paid Via*" }).click();
+    await page.getByRole("option", { name: "card" }).click();
+    await page.getByRole("textbox", { name: "Description" }).click();
 
     await page
       .getByRole("textbox", { name: "Description" })
@@ -28,7 +33,7 @@ test.describe("Expenses Lifecyle: Create, Assert & Delete", () => {
 
     const responsePromise = page.waitForResponse(
       (res) =>
-        res.url().includes("api/expense/create") &&
+        res.url() == "http://localhost:3000/api/expense/create" &&
         res.request().method() === "PUT" &&
         (res.status() === 200 || res.status() === 201),
     );
@@ -80,6 +85,12 @@ test.describe("Expenses Lifecyle: Create, Assert & Delete", () => {
       .getByRole("textbox", { name: "Total Amount*" })
       .fill(expense.amount);
 
+    await page.getByRole("combobox", { name: "category*" }).click();
+    await page.getByRole("option", { name: expense.category }).click();
+    await page.getByRole("combobox", { name: "Paid Via*" }).click();
+    await page.getByRole("option", { name: "card" }).click();
+    await page.getByRole("textbox", { name: "Description" }).click();
+
     await page
       .getByRole("textbox", { name: "Description" })
       .fill(expense.description);
@@ -90,7 +101,7 @@ test.describe("Expenses Lifecyle: Create, Assert & Delete", () => {
 
     // ASSERT ERROR
     await expect(
-      page.getByTestId("invoice_creation_error_display"),
+      page.getByTestId("invoice_creation_error_display")
     ).toBeVisible({ timeout: 20_000 });
   });
 });

@@ -1,6 +1,7 @@
 name: Playwright Tests
 on:
   push:
+  pull_request:
 jobs:
   
   test:
@@ -25,7 +26,6 @@ jobs:
       BASE_URL: http://localhost:3000
       NODE_ENV: test
       JWT_SECRET: ${{secrets.JWT_SECRET}}
-      LOGIN: ${{secrets.LOGIN}}
       NUXT_NODEMAILER_AUTH_PASS: ${{secrets.NUXT_NODEMAILER_AUTH_PASS}}
       NUXT_NODEMAILER_FROM: ${{vars.NUXT_NODEMAILER_FROM}}
     steps:

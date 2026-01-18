@@ -31,7 +31,6 @@
                 :items="['personal', 'Utilities', 'Rent', 'Food']"
                 size="xl"
                 class="w-full"
-                data-testId="category-select"
                 v-model="formData.category"
               />
             </u-form-field>

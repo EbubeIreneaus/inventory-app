@@ -28,6 +28,7 @@ async function globalSetup(config: FullConfig) {
     },
   });
   await requestContext.dispose();
+
   // }
   const browser = await chromium.launch();
   const page = await browser.newPage();
@@ -37,9 +38,8 @@ async function globalSetup(config: FullConfig) {
   await page
     .getByRole("textbox", { name: "Password*" })
     .fill(process.env.LOGIN || "");
-
   await page.getByRole("button", { name: "Login" }).click();
-  await page.waitForURL("**/", { timeout: 60_000 });
+  await page.waitForURL("**/", { timeout: 30_000 });
   await page.context().storageState({ path: storageState as string });
 }
 
