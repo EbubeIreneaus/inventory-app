@@ -29,6 +29,7 @@ async function globalSetup(config: FullConfig) {
   });
   await requestContext.dispose();
 
+  console.log('Constest dispose', res)
   // }
   const browser = await chromium.launch();
   const page = await browser.newPage();
