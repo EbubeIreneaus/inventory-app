@@ -121,12 +121,13 @@ const ColumnData: TableColumn<StockSelect>[] = [
               type: "label",
             },
             {
-              label: "View",
+              label: "View product",
               icon: "mdi:eye",
               to: `/stock/${row.original.id}`,
+              
             },
             {
-              label: "Edit",
+              label: "Edit product",
               icon: "mdi:pen",
               to: `/stock/${row.original.id}/edit`,
             },

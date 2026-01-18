@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
       to: 'all'
     })
     broadcast({key: 'new_expense', data: expense})
-    return { statusCode: 201 };
+    return { statusCode: 201, insertId: expense?.id };
   } catch (error: any) {
     return createError({
       statusMessage:

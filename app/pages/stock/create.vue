@@ -82,6 +82,13 @@
               />
             </u-form-field>
           </div>
+          <p
+            v-if="errorMsg"
+            data-testId="stock_creation_error_display"
+            class="my-3 text-red-500"
+          >
+            Error: {{ errorMsg }}
+          </p>
           <div class="mt-7 flex gap-5 flex-wrap">
             <u-button
               label="save"
@@ -110,9 +117,10 @@
 import type { StockInsert } from "~/types";
 const categories = ["phone", "laptop", "watch", "tablet", "electronics"];
 
-const isLoading = ref(false)
-const toast = useToast()
-const router = useRouter()
+const isLoading = ref(false);
+const toast = useToast();
+const router = useRouter();
+const errorMsg = ref<null | string>(null);
 
 const { formData, reset } = useForm<StockInsert>({
   productName: "",
@@ -120,37 +128,39 @@ const { formData, reset } = useForm<StockInsert>({
   description: "",
   isAvailable: true,
   unitPrice: "0.0",
-  sellingPrice: '0.0',
+  sellingPrice: "0.0",
   quantity: 1,
   size: "md",
 });
 
 async function saveStock(redirect: boolean) {
   try {
-    isLoading.value = true
-    const res = await $fetch('/api/stock/create', {
-      method: 'PUT',
+    errorMsg.value = null
+    isLoading.value = true;
+    const res = await $fetch("/api/stock/create", {
+      method: "PUT",
       body: formData.value,
-      credentials: 'same-origin',
-    })
+      credentials: "same-origin",
+    });
     if (res.statusCode == 201) {
       toast.add({
-        title: 'Product added successfully',
-        color: 'success',
-        icon: 'mdi:cart-plus',
-      })
-      if (redirect) router.push('/');
+        title: "Product added successfully",
+        color: "success",
+        icon: "mdi:cart-plus",
+      });
+      if (redirect) router.push("/");
     }
   } catch (error: any) {
-     toast.add({
-        title: 'Failed Request',
-        description: error.statusMessage || 'unknown server error occured',
-        color: 'error',
-        icon: 'lucide:triangle-alert',
-      })
+    errorMsg.value =  error.statusMessage || "unknown server error occured",
+    toast.add({
+      title: "Failed Request",
+      description: error.statusMessage || "unknown server error occured",
+      color: "error",
+      icon: "lucide:triangle-alert",
+    });
   } finally {
-    isLoading.value = false
-    reset()
+    isLoading.value = false;
+    reset();
   }
 }
 </script>

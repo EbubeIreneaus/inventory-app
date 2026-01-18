@@ -7,7 +7,7 @@
       <div class="py-6">
         <form>
           <div class="grid sm:grid-cols-2 gap-x-5 gap-y-4 sm:gap-y-7">
-            <u-form-field label="Cstomer Name">
+            <u-form-field label="Customer Name">
               <u-input
                 placeholder="John Doe"
                 size="xl"
@@ -132,6 +132,13 @@
               </form>
             </div>
           </div>
+           <p
+            v-if="errorMsg"
+            data-testId="invoice_creation_error_display"
+            class="my-3 text-red-500"
+          >
+            Error: {{ errorMsg }}
+          </p>
           <div class="mt-7 flex gap-5 flex-wrap">
             <u-button
               label="save"
@@ -140,6 +147,7 @@
               color="secondary"
               :loading="isLoading"
               @click="save(false)"
+              
             />
             <u-button
               label="save & print"
@@ -180,6 +188,7 @@ const { formData: productForm, reset: productReset } = useForm({
 const isLoading = ref(false);
 const toast = useToast();
 const router = useRouter();
+const errorMsg = ref<null | string>(null)
 
 const { formData, reset } = useForm<InvoiceInsert>({
   buyer: "",
@@ -200,7 +209,13 @@ const addProductToInvoice = async () => {
 
 async function save(print: boolean) {
   try {
+    errorMsg.value = null
     isLoading.value = true;
+
+    if (!formData.value.products || formData.value.products.length < 1) {
+     return errorMsg.value = "Invoice must contain at least one product"
+    }
+
     const res = await $fetch<{ statusCode: number; invoiceId: number }>(
       "/api/invoice/create",
       {
@@ -218,6 +233,7 @@ async function save(print: boolean) {
       if (print) router.push(`/invoice/${res.invoiceId}`);
     }
   } catch (error: any) {
+    errorMsg.value = error.statusMessage || "unknown server error occured"
     toast.add({
       title: "Failed Request",
       description: error.statusMessage || "unknown server error occured",

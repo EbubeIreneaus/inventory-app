@@ -17,9 +17,9 @@
         <div>
           <div>
             <div class="text-center mb-10">
-              <h1 class="text-2xl capitalize">St Angela Medical Store</h1>
+              <h1 class="text-2xl capitalize">Ebube Ireneaus Pharm & Store</h1>
               <p>Block 38, Veteran Plaza, Army Estate Kubwa, Abuja</p>
-              <p>08061982520, 08085419653</p>
+              <p>+234 701 234 5678, +234 812 346 5678</p>
             </div>
             <div class="flex justify-between my-5">
               <div class="w-full">
@@ -30,7 +30,7 @@
               </div>
               <div class="w-full">
                 <h2 class="opacity-50">Bill To</h2>
-                <p>{{ Invoice?.buyer }}</p>
+                <p data-testId="invoice_buyer">{{ Invoice?.buyer }}</p>
               </div>
             </div>
           </div>
@@ -71,7 +71,7 @@
             <ul class="*:grid *:grid-cols-2 *:gap-x-20 *:mb-4">
               <li>
                 <span>SubTotal</span>
-                <span class="font-mono">{{
+                <span class="font-mono" data-testId="invoice_subtotal">{{
                   NairaFMT(Invoice?.totalAmount || 0, "standard")
                 }}</span>
               </li>
@@ -85,7 +85,7 @@
               </li>
               <li>
                 <span class="font-bold">Total</span>
-                <span class="font-bold text-lg font-mono">{{
+                <span class="font-bold text-lg font-mono" data-testId="invoice_total">{{
                   NairaFMT(Invoice?.totalAmount || 0, "standard")
                 }}</span>
               </li>

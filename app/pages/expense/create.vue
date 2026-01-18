@@ -32,7 +32,7 @@
                 size="xl"
                 class="w-full"
                 v-model:model-value="formData.category as string"
-                />
+              />
             </u-form-field>
             <u-form-field label="Description" class="sm:col-span-2">
               <u-textarea
@@ -43,6 +43,13 @@
               />
             </u-form-field>
           </div>
+          <p
+            v-if="errorMsg"
+            data-testId="invoice_creation_error_display"
+            class="my-3 text-red-500"
+          >
+            Error: {{ errorMsg }}
+          </p>
           <div class="mt-7 flex gap-5 flex-wrap">
             <u-button
               label="save"
@@ -68,46 +75,57 @@
 </template>
 
 <script lang="ts" setup>
-import type { ExpenseInsert} from "~/types";
+import type { ExpenseInsert } from "~/types";
 
-const isLoading = ref(false)
-const toast = useToast()
-const router = useRouter()
+const isLoading = ref(false);
+const toast = useToast();
+const router = useRouter();
+const errorMsg = ref<null | string>(null);
 
 const { formData, reset } = useForm<ExpenseInsert>({
-   totalAmount: '',
-   paymentType: 'cash',
-   category: String(''),
-   currency: '',
-   desc:''
+  totalAmount: "",
+  paymentType: "cash",
+  category: String(""),
+  currency: "",
+  desc: "",
 });
 
 async function save(stay: boolean) {
   try {
-    isLoading.value = true
-    const res = await $fetch<{statusCode: number, invoiceId:number}>('/api/expense/create', {
-      method: 'PUT',
-      body: formData.value,
-      credentials: 'same-origin',
-    })
+    errorMsg.value = null;
+    isLoading.value = true;
+
+    if (parseInt(formData.value.totalAmount as string) < 5) {
+      return (errorMsg.value = "Amount should not be less than 5 naira");
+    }
+
+    const res = await $fetch<{ statusCode: number; invoiceId: number }>(
+      "/api/expense/create",
+      {
+        method: "PUT",
+        body: formData.value,
+        credentials: "same-origin",
+      },
+    );
     if (res.statusCode == 201) {
       toast.add({
-        title: 'Expense recorded successfully',
-        color: 'success',
-        icon: 'mdi:cart-plus',
-      })
+        title: "Expense recorded successfully",
+        color: "success",
+        icon: "mdi:cart-plus",
+      });
       if (!stay) router.push(`/expense`);
     }
   } catch (error: any) {
-     toast.add({
-        title: 'Failed Request',
-        description: error.statusMessage || 'unknown server error occured',
-        color: 'error',
-        icon: 'lucide:triangle-alert',
-      })
+    errorMsg.value = error.statusMessage || "unknown server error occured";
+    toast.add({
+      title: "Failed Request",
+      description: error.statusMessage || "unknown server error occured",
+      color: "error",
+      icon: "lucide:triangle-alert",
+    });
   } finally {
-    isLoading.value = false
-    reset()
+    isLoading.value = false;
+    reset();
   }
 }
 </script>

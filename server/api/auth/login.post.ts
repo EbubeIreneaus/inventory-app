@@ -13,6 +13,7 @@ const schema = z.object({
 
 export default defineEventHandler(async (event) => {
   try {
+    const isProd = process.env.NODE_ENV === 'production';
     const { data, error } = await readValidatedBody(event, schema.safeParse);
     const config = useRuntimeConfig();
 
@@ -42,7 +43,7 @@ export default defineEventHandler(async (event) => {
     const token = jwt.sign({ ...user, password: null, sessionId }, config.jwtSecret, {
       expiresIn: data.rememberme ? "30d" : "24h",
     });
-    setCookie(event, "Authorization", token, { sameSite: true, secure: true });
+    setCookie(event, "Authorization", token, { sameSite: 'lax', secure: false, httpOnly: true, path: '/' });
     return { statusCode: 200, user };
   } catch (error: any) {
     return createError({

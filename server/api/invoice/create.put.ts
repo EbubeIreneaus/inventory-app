@@ -17,6 +17,13 @@ export default defineEventHandler(async (event) => {
       });
     }
 
+    if (!data.products || data.products.length < 1) {
+       return createError({
+        statusMessage: "Invoice must contain at least one product",
+        statusCode: 422,
+      });
+    }
+
     const totalAmount = data.products?.reduce(
       (x, y) => x + Number(y.amount),
       0

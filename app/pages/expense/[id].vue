@@ -12,22 +12,22 @@
 
     <div>
       <label class="block text-sm opacity-50">Category</label>
-      <p class="font-medium ">{{ expense?.category }}</p>
+      <p class="font-medium " data-testId="expense_category">{{ expense?.category }}</p>
     </div>
 
     <div>
       <label class="block text-sm opacity-50">Total Amount</label>
-      <p class="font-medium ">{{ NairaFMT(expense?.totalAmount || 0, 'standard') }}</p>
+      <p class="font-medium " data-testId="expense_amount">{{ NairaFMT(expense?.totalAmount || 0, 'standard') }}</p>
     </div>
 
     <div>
       <label class="block text-sm opacity-50">Currency</label>
-      <p class="font-medium ">NGN</p>
+      <p class="font-medium " data-testId="expense_currency">NGN</p>
     </div>
 
     <div>
       <label class="block text-sm opacity-50">Payment Type</label>
-      <p class="font-medium  capitalize">{{ expense?.paymentType }}</p>
+      <p class="font-medium  capitalize" data-testId="expense_paytype">{{ expense?.paymentType }}</p>
     </div>
 
     <div>
@@ -37,14 +37,14 @@
 
     <div class="md:col-span-2">
       <label class="block text-sm opacity-50">Description</label>
-      <p class="font-medium ">
+      <p class="font-medium " data-testId="expense_desc">
         {{ expense?.desc }}
       </p>
     </div>
 
     <div class="md:col-span-2 pt-4 border-t mt-5">
       <label class="block text-sm opacity-50">Recorded By</label>
-      <p class="font-medium ">
+      <p class="font-medium " data-testId="expense_staff">
         {{ expense?.user?.firstname }} {{ expense?.user?.lastname }} — <span class="text-blue-600 italic">staff</span>
       </p>
     </div>

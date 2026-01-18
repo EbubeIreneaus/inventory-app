@@ -73,6 +73,7 @@
           @click="deleteStock()"
           :loading="isDeleting"
           icon="lucide:trash-2"
+          aria-label="delete product"
         >
           Delete
         </u-button>

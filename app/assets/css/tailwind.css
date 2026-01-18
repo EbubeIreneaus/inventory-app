@@ -12,19 +12,18 @@
   --color-error: #ef4444;
   --color-secondary: #798EFF;
   --color-info: #38bdf8;
-  --font-playfair: "Sansation", sans-serif
+  --font-playfair: "Arial", sans-serif
 }
 
 body{
-    @apply bg-background-light dark:bg-background-dark print:bg-[white] print:text-[black];
-    font-family: var(--font-playfair);
+    @apply bg-background-light dark:bg-background-dark print:bg-[white] print:text-[black] font-playfair;
+  
 }
 @media print {
   @page {
     size: auto;
     margin: 0;
   }
-  /* Remove margins that break layout in print mode */
   body {
     margin: 0 !important;
     padding: 0 !important;

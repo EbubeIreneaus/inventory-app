@@ -12,6 +12,7 @@
               <h4
                 class="text-2xl font-bold text-gray-800 dark:text-white/90"
                 :title="TotalSalesAmount.toFixed(2).toString()"
+                data-testid="total_sales_amount"
               >
                 <span v-naira="TotalSalesAmount"></span>
               </h4>
@@ -37,7 +38,7 @@
 
           <div class="mt-3 flex items-center justify-between">
             <div>
-              <h4 class="text-2xl font-bold text-gray-800 dark:text-white/90">
+              <h4 class="text-2xl font-bold text-gray-800 dark:text-white/90" data-testid="total_expense_amount">
                 <span v-naira="TotalExpenseAmount"></span>
               </h4>
             </div>
@@ -62,7 +63,7 @@
 
           <div class="mt-3 flex items-center justify-between">
             <div>
-              <h4 class="text-2xl font-bold text-gray-800 dark:text-white/90">
+              <h4 class="text-2xl font-bold text-gray-800 dark:text-white/90" data-testid="total_stock_product">
                 {{ ProductInStock }}
               </h4>
             </div>
@@ -87,7 +88,7 @@
 
           <div class="mt-3 flex items-center justify-between">
             <div>
-              <h4 class="text-2xl font-bold text-gray-800 dark:text-white/90">
+              <h4 class="text-2xl font-bold text-gray-800 dark:text-white/90" data-testid="total_outstock_product">
                 {{ ProductOutOfStock }}
               </h4>
             </div>
@@ -116,6 +117,8 @@
               v-for="[title, value] in Invoicepayments"
               :key="title"
               class="flex justify-between items-center py-3 border-b border-primary/30 lg:px-3 text-sm lg:text-base"
+              :id="`invoice-${title}`"
+              :data-testid="`invoice_${title}`"
             >
               <span class="uppercase font-semibold">{{ title }}</span>
               <span v-naira="value"></span>
@@ -126,7 +129,7 @@
           <template #header>
             <h2>Top 5 Products</h2>
           </template>
-          <ul>
+      <ul data-testid="product_purchase_count_section">
             <li
               class="flex justify-between items-center uppercase font-semibold mb-3 text-xs text-info"
             >
@@ -137,6 +140,7 @@
               v-for="{ name, count } in Top5Products"
               :key="name"
               class="flex justify-between items-center py-3 border-b border-primary/30 px-3"
+              :data-testid="``"
             >
               <span class="uppercase font-semibold">{{ name }}</span>
               <span>{{ count }}</span>

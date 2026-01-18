@@ -8,8 +8,8 @@ import bcrypt from "bcryptjs";
 const schema = createInsertSchema(userTable);
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
+  console.log("Api endpoint reached")
   const { data, error } = await readValidatedBody(event, schema.safeParse);
-  const {sendMail} = useNodeMailer()
 
   if (error) {
     return createError({
@@ -17,6 +17,7 @@ export default defineEventHandler(async (event) => {
       statusMessage: error.issues[0].message,
     });
   }
+  console.log("Api endpoint rno error")
 
   try {
     const [existingUser] = await db
@@ -24,35 +25,19 @@ export default defineEventHandler(async (event) => {
       .from(userTable)
       .where(ilike(userTable.email, data.email));
 
-  
     if (existingUser) {
-      return createError({
-        statusCode: 401,
-        statusMessage: "Email already exist.",
-      });
+      return { statusCode: 200 };
     }
 
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(data.password, salt);
+
+      console.log("Api endpoint ready to create user")
+
+
     // create user
-    const [user] = await db
-      .insert(userTable)
-      .values({ ...data})
-      .returning();
-
-
-    // const token = jwt.sign({ ...user, password: null }, config.jwtSecret);
-    // setCookie(event, "Authentication", token, { sameSite: true, secure: true });
-    // send welcoming email
-    await sendMail({
-      subject: 'Welcome Onboard',
-      to: user.email,
-      html: `
-        <p>Welcome ${user.firstname} ${user.lastname}</p>
-        <P>Follow this link to create your dashboard password</P>
-        <p><a href="http://localhost:3001/auth/reset?email=${user.email}">http://localhost:3001/auth/reset?email=${user.email}</a></p>
-        <br />
-        <p>Regards<br /> Bizly Enterprice</p>
-      `
-    })
+    await db.insert(userTable).values({ ...data, password: hash });
+     console.log("Api user created")
     return { statusCode: 201 };
   } catch (error: any) {
     return createError({
