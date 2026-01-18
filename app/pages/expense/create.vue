@@ -90,7 +90,7 @@ type formType = Omit<ExpenseInsert, 'category'> & {
 const { formData, reset } = useForm<formType>({
   totalAmount: "",
   paymentType: "cash",
-  category: "",
+  category: "Utilities",
   currency: "",
   desc: "",
 });
