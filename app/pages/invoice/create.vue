@@ -55,14 +55,20 @@
                   required
                   class="max-w-[200px] w-full"
                 >
-                  <u-select
+                  <select
                     size="xl"
                     placeholder="stock"
-                    :items="Products"
-                    class="w-full"
+                    class="w-full py-2 bg-background-dark ring ring-secondary/30 rounded-md px-2"
                     v-model="productForm.name"
                     required
-                  />
+                    data-testId="invoice_product_stock_select"
+                  >
+                    <option
+                      v-for="option in Products"
+                      :key="option.label"
+                      :value="option.value"
+                    >{{ option.label }}</option>
+                  </select>
                 </u-form-field>
 
                 <u-form-field label="Quantity" required>
@@ -132,7 +138,7 @@
               </form>
             </div>
           </div>
-           <p
+          <p
             v-if="errorMsg"
             data-testId="invoice_creation_error_display"
             class="my-3 text-red-500"
@@ -147,7 +153,6 @@
               color="secondary"
               :loading="isLoading"
               @click="save(false)"
-              
             />
             <u-button
               label="save & print"
@@ -188,7 +193,7 @@ const { formData: productForm, reset: productReset } = useForm({
 const isLoading = ref(false);
 const toast = useToast();
 const router = useRouter();
-const errorMsg = ref<null | string>(null)
+const errorMsg = ref<null | string>(null);
 
 const { formData, reset } = useForm<InvoiceInsert>({
   buyer: "",
@@ -201,19 +206,19 @@ const { formData, reset } = useForm<InvoiceInsert>({
 const addProductToInvoice = async () => {
   const product = productForm.value;
   const split = product.name.split(";");
-  const name = split[1]|| '';
-  const id = split[0] || '0';
+  const name = split[1] || "";
+  const id = split[0] || "0";
   formData.value.products?.push({ ...product, name, id: Number(id) });
   productReset();
 };
 
 async function save(print: boolean) {
   try {
-    errorMsg.value = null
+    errorMsg.value = null;
     isLoading.value = true;
 
     if (!formData.value.products || formData.value.products.length < 1) {
-     return errorMsg.value = "Invoice must contain at least one product"
+      return (errorMsg.value = "Invoice must contain at least one product");
     }
 
     const res = await $fetch<{ statusCode: number; invoiceId: number }>(
@@ -222,7 +227,7 @@ async function save(print: boolean) {
         method: "PUT",
         body: formData.value,
         credentials: "same-origin",
-      }
+      },
     );
     if (res.statusCode == 201) {
       toast.add({
@@ -233,7 +238,7 @@ async function save(print: boolean) {
       if (print) router.push(`/invoice/${res.invoiceId}`);
     }
   } catch (error: any) {
-    errorMsg.value = error.statusMessage || "unknown server error occured"
+    errorMsg.value = error.statusMessage || "unknown server error occured";
     toast.add({
       title: "Failed Request",
       description: error.statusMessage || "unknown server error occured",
