@@ -28,6 +28,7 @@ jobs:
       JWT_SECRET: ${{secrets.JWT_SECRET}}
       NUXT_NODEMAILER_AUTH_PASS: ${{secrets.NUXT_NODEMAILER_AUTH_PASS}}
       NUXT_NODEMAILER_FROM: ${{vars.NUXT_NODEMAILER_FROM}}
+      LOGIN: ${{secrets.LOGIN}}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
