@@ -37,7 +37,7 @@ test.describe("Expenses Lifecyle: Create, Assert & Delete", () => {
 
     const responsePromise = page.waitForResponse(
       (res) =>
-        res.url() == "http://localhost:3000/api/expense/create" &&
+        res.url().includes("api/expense/create") &&
         res.request().method() === "PUT" &&
         (res.status() === 200 || res.status() === 201),
     );
