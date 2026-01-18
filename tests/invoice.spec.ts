@@ -37,12 +37,8 @@ test.describe("Invoice Lifecyle: Create Stock & Invoice, Delete Stock & Invoice"
     await page
       .getByRole("textbox", { name: "Product Name*" })
       .fill(productName);
-    await page.getByRole("combobox", { name: "Product Category*" }).click();
-    await page.getByRole("option", { name: "phone" }).click();
     await page.getByRole("spinbutton", { name: "Quantities*" }).click();
     await page.getByRole("spinbutton", { name: "Quantities*" }).fill("10");
-    await page.getByRole("combobox", { name: "Size*" }).click();
-    await page.getByRole("option", { name: "lg" }).click();
     await page.getByRole("textbox", { name: "Unit Price*" }).click();
     await page
       .getByRole("textbox", { name: "Unit Price*" })
@@ -51,8 +47,6 @@ test.describe("Invoice Lifecyle: Create Stock & Invoice, Delete Stock & Invoice"
     await page
       .getByRole("textbox", { name: "Selling Price*" })
       .fill(invoice.stock_selling_price);
-    await page.getByRole("combobox", { name: "Available*" }).click();
-    await page.getByRole("option", { name: "true" }).click();
     await page.getByRole("textbox", { name: "Description" }).click();
     await page
       .getByRole("textbox", { name: "Description" })
@@ -73,13 +67,9 @@ test.describe("Invoice Lifecyle: Create Stock & Invoice, Delete Stock & Invoice"
     await page
       .getByRole("textbox", { name: "Customer Name" })
       .fill("Ebube Ireneaus");
-    await page.getByRole("combobox", { name: "Payment Method*" }).click();
-    await page.getByRole("option", { name: "transfer" }).click();
-    await page.getByRole("combobox", { name: "Size*" }).click();
-    await page.getByRole("option", { name: "NGN" }).click();
-    await page.getByRole("combobox", { name: "Stock Item*" }).click();
-    await expect(page.getByRole('option', {name: productName})).toBeVisible({timeout: 10_000})
-    await page.getByRole("option", { name: productName }).click();
+
+    await page.getByTestId("invoice_product_stock_select").selectOption(productName);
+    
     await page
       .getByRole("textbox", { name: "Quantity*" })
       .fill(invoice.quantities);
@@ -153,10 +143,6 @@ test.describe("Invoice Lifecyle: Create Stock & Invoice, Delete Stock & Invoice"
     await page
       .getByRole("textbox", { name: "Customer Name" })
       .fill("Ebube Ireneaus");
-    await page.getByRole("combobox", { name: "Payment Method*" }).click();
-    await page.getByRole("option", { name: "transfer" }).click();
-    await page.getByRole("combobox", { name: "Size*" }).click();
-    await page.getByRole("option", { name: "NGN" }).click();
     await page
       .getByRole("button", { name: "save & print", exact: true })
       .click();

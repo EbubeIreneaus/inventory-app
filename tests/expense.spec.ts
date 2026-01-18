@@ -22,8 +22,6 @@ test.describe("Expenses Lifecyle: Create, Assert & Delete", () => {
       .getByRole("textbox", { name: "Total Amount*" })
       .fill(expense.amount);
 
-    await page.getByRole("combobox", { name: "Paid Via*" }).click();
-    await page.getByRole("option", { name: "card" }).click();
     await page
       .getByRole("textbox", { name: "Description" })
       .fill(expense.description);
@@ -82,8 +80,6 @@ test.describe("Expenses Lifecyle: Create, Assert & Delete", () => {
       .getByRole("textbox", { name: "Total Amount*" })
       .fill(expense.amount);
 
-    await page.getByRole("combobox", { name: "Paid Via*" }).click();
-    await page.getByRole("option", { name: "card" }).click();
     await page
       .getByRole("textbox", { name: "Description" })
       .fill(expense.description);

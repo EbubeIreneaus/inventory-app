@@ -18,18 +18,12 @@ test.describe("Stock Lifecycle, Create and Delete Stock", () => {
     await page
       .getByRole("textbox", { name: "Product Name*" })
       .fill(productName);
-    await page.getByRole("combobox", { name: "Product Category*" }).click();
-    await page.getByRole("option", { name: "phone" }).click();
     await page.getByRole("spinbutton", { name: "Quantities*" }).click();
     await page.getByRole("spinbutton", { name: "Quantities*" }).fill("10");
-    await page.getByRole("combobox", { name: "Size*" }).click();
-    await page.getByRole("option", { name: "lg" }).click();
     await page.getByRole("textbox", { name: "Unit Price*" }).click();
     await page.getByRole("textbox", { name: "Unit Price*" }).fill("618000");
     await page.getByRole("textbox", { name: "Selling Price*" }).click();
     await page.getByRole("textbox", { name: "Selling Price*" }).fill("900000");
-    await page.getByRole("combobox", { name: "Available*" }).click();
-    await page.getByRole("option", { name: "true" }).click();
     await page.getByRole("textbox", { name: "Description" }).click();
     await page
       .getByRole("textbox", { name: "Description" })
@@ -74,18 +68,13 @@ test.describe("Stock Lifecycle, Create and Delete Stock", () => {
     await page
       .getByRole("textbox", { name: "Product Name*" })
       .fill(productName);
-    await page.getByRole("combobox", { name: "Product Category*" }).click();
-    await page.getByRole("option", { name: "phone" }).click();
+
     await page.getByRole("spinbutton", { name: "Quantities*" }).click();
     await page.getByRole("spinbutton", { name: "Quantities*" }).fill("-10");
-    await page.getByRole("combobox", { name: "Size*" }).click();
-    await page.getByRole("option", { name: "lg" }).click();
     await page.getByRole("textbox", { name: "Unit Price*" }).click();
     await page.getByRole("textbox", { name: "Unit Price*" }).fill("-3000");
     await page.getByRole("textbox", { name: "Selling Price*" }).click();
     await page.getByRole("textbox", { name: "Selling Price*" }).fill("900000");
-    await page.getByRole("combobox", { name: "Available*" }).click();
-    await page.getByRole("option", { name: "true" }).click();
     await page.getByRole("textbox", { name: "Description" }).click();
     await page
       .getByRole("textbox", { name: "Description" })

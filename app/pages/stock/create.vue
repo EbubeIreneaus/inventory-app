@@ -124,7 +124,7 @@ const errorMsg = ref<null | string>(null);
 
 const { formData, reset } = useForm<StockInsert>({
   productName: "",
-  category: "",
+  category: "phone",
   description: "",
   isAvailable: true,
   unitPrice: "0.0",
