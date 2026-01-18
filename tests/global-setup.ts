@@ -28,8 +28,6 @@ async function globalSetup(config: FullConfig) {
     },
   });
   await requestContext.dispose();
-
-  console.log('Constest dispose', res)
   // }
   const browser = await chromium.launch();
   const page = await browser.newPage();
@@ -40,16 +38,7 @@ async function globalSetup(config: FullConfig) {
     .getByRole("textbox", { name: "Password*" })
     .fill(process.env.LOGIN || "");
 
-    const loginResponsePromise = page.waitForResponse(res =>
-  res.url().includes('/api/auth/login')
-)
-
   await page.getByRole("button", { name: "Login" }).click();
-
-  const loginResponse = await loginResponsePromise
-console.log('LOGIN STATUS:', loginResponse.status())
-console.log('LOGIN BODY:', await loginResponse.text())
-
   await page.waitForURL("**/", { timeout: 60_000 });
   await page.context().storageState({ path: storageState as string });
 }
