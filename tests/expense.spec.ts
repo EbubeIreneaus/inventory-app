@@ -22,9 +22,11 @@ test.describe("Expenses Lifecyle: Create, Assert & Delete", () => {
       .getByRole("textbox", { name: "Total Amount*" })
       .fill(expense.amount);
 
-    await page.getByRole("combobox", { name: "category*" }).click();
-    await page.getByRole("option", { name: "Utilities" }).waitFor();
-    await page.getByRole("option", { name: "Utilities" }).click();
+await page.getByRole("combobox", { name: "category*" }).click();
+const option = page.getByRole("option", { name: "Utilities" });
+await expect(option).toBeVisible();
+await option.click();
+
 
 
     await page.getByRole("combobox", { name: "Paid Via*" }).click();
@@ -87,9 +89,12 @@ test.describe("Expenses Lifecyle: Create, Assert & Delete", () => {
       .getByRole("textbox", { name: "Total Amount*" })
       .fill(expense.amount);
 
-    await page.getByRole("combobox", { name: "category*" }).click();
-    await page.getByRole("option", { name: "Utilities" }).waitFor();
-    await page.getByRole("option", { name: "Utilities" }).click();
+await page.getByRole("combobox", { name: "category*" }).click();
+const option = page.getByRole("option", { name: "Utilities" });
+await expect(option).toBeVisible();
+await option.click();
+
+
 
     await page.getByRole("combobox", { name: "Paid Via*" }).click();
     await page.getByRole("option", { name: "card" }).click();
