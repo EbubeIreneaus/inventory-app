@@ -31,7 +31,8 @@
                 :items="['personal', 'Utilities', 'Rent', 'Food']"
                 size="xl"
                 class="w-full"
-                v-model:model-value="formData.category as string"
+                data-testId="category-select"
+                v-model="formData.category"
               />
             </u-form-field>
             <u-form-field label="Description" class="sm:col-span-2">
@@ -82,10 +83,14 @@ const toast = useToast();
 const router = useRouter();
 const errorMsg = ref<null | string>(null);
 
-const { formData, reset } = useForm<ExpenseInsert>({
+type formType = Omit<ExpenseInsert, 'category'> & {
+  category: string
+}
+
+const { formData, reset } = useForm<formType>({
   totalAmount: "",
   paymentType: "cash",
-  category: String(""),
+  category: "",
   currency: "",
   desc: "",
 });
